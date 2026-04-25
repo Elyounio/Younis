@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRO FITNESS | Push Pull Legs Upper Lower</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --surface2: #1e1e1e;
+            --gold: #d4af37;
+            --gold2: #f0c75e;
+            --text: #e0e0e0;
+            --text2: #a0a0a0;
+            --accent: #c0392b;
+            --accent2: #e74c3c;
+            --green: #27ae60;
+            --blue: #2980b9;
+            --border: #2a2a2a;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 8px 40px rgba(0,0,0,0.5);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            line-height: 1.6;
+            background-image: radial-gradient(ellipse at top, #1a1a1a 0%, #0a0a0a 70%);
+        }
+        .container { max-width: 1050px; margin: auto; }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.05), transparent, rgba(212,175,55,0.03), transparent);
+            animation: rotateGlow 20s linear infinite;
+        }
+        @keyframes rotateGlow { to { transform: rotate(360deg); } }
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 900;
+            background: linear-gradient(180deg, var(--gold2) 0%, var(--gold) 50%, #b8941f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -1px;
+        }
+        .header .subtitle {
+            color: var(--text2);
+            font-size: 1em;
+            position: relative;
+            z-index: 1;
+            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+        .warning-banner {
+            background: rgba(192,57,43,0.15);
+            border: 1px solid rgba(192,57,43,0.3);
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 0.9em;
+            color: #e74c3c;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Day Header */
+        .day-header {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin: 30px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+        }
+        .day-header:hover { border-color: var(--gold); }
+        .day-icon {
+            width: 55px; height: 55px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            flex-shrink: 0;
+        }
+        .icon-push { background: rgba(231,76,60,0.15); }
+        .icon-pull { background: rgba(41,128,185,0.15); }
+        .icon-legs { background: rgba(39,174,96,0.15); }
+        .icon-upper { background: rgba(142,68,173,0.15); }
+        .icon-lower { background: rgba(230,126,34,0.15); }
+        .icon-rest { background: rgba(149,165,166,0.15); }
+        .day-info h2 { font-size: 1.5em; color: var(--gold); font-weight: 800; }
+        .day-info span { font-size: 0.85em; color: var(--text2); }
+
+        /* Exercise Card */
+        .exercise-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 25px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .exercise-card:hover { border-color: #444; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .exercise-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .exercise-name {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #fff;
+        }
+        .exercise-meta {
+            font-size: 0.85em;
+            color: var(--text2);
+            background: var(--surface2);
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+        .video-preview {
+            width: 100%;
+            max-width: 360px;
+            margin: 12px 0;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            display: none;
+            border: 1px solid var(--border);
+        }
+        .video-preview video { width: 100%; display: block; max-height: 220px; background: #000; }
+        .btn {
+            padding: 8px 18px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-upload { background: var(--accent); color: #fff; }
+        .btn-upload:hover { background: #e74c3c; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(231,76,60,0.3); }
+        .btn-delete { background: transparent; color: #999; border: 1px solid #444; }
+        .btn-delete:hover { background: #2a2a2a; color: #e74c3c; border-color: #e74c3c; }
+        .btn-add-set {
+            background: var(--gold);
+            color: #0a0a0a;
+            font-weight: 700;
+            padding: 10px 22px;
+            font-size: 0.9em;
+            margin-top: 12px;
+        }
+        .btn-add-set:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,0.3); }
+
+        /* Sets Log Table */
+        .sets-log {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+        }
+        .sets-log th {
+            background: var(--surface2);
+            color: var(--text2);
+            padding: 12px 10px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--border);
+        }
+        .sets-log td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .set-delete-btn {
+            background: transparent;
+            color: #666;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 4px 8px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .set-delete-btn:hover { color: #e74c3c; background: rgba(231,76,60,0.1); }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: var(--shadow);
+        }
+        .modal h3 { color: var(--gold); margin-bottom: 20px; font-size: 1.3em; text-align: center; }
+        .modal label { display: block; color: var(--text2); margin: 12px 0 5px 0; font-size: 0.9em; }
+        .modal input, .modal select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            background: var(--surface2);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1em;
+            transition: var(--transition);
+        }
+        .modal input:focus, .modal select:focus { outline: none; border-color: var(--gold); }
+        .color-options { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+        .color-dot {
+            width: 35px; height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: var(--transition);
+        }
+        .color-dot.selected { border-color: #fff; transform: scale(1.2); box-shadow: 0 0 15px currentColor; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-save { background: var(--green); color: #fff; flex: 1; padding: 12px; }
+        .btn-save:hover { background: #2ecc71; }
+        .btn-cancel { background: transparent; color: #999; border: 1px solid #444; flex: 1; padding: 12px; }
+        .btn-cancel:hover { background: #2a2a2a; }
+
+        /* Superset & Giant Boxes */
+        .intensity-box {
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            margin: 12px 0;
+            border: 2px dashed;
+        }
+        .superset { background: rgba(243,156,18,0.06); border-color: rgba(243,156,18,0.3); }
+        .giantset { background: rgba(231,76,60,0.06); border-color: rgba(231,76,60,0.3); }
+        .intensity-box h3 { margin-bottom: 10px; font-size: 1em; }
+        .superset h3 { color: #f39c12; }
+        .giantset h3 { color: #e74c3c; }
+
+        /* Finisher */
+        .finisher {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--green);
+            border-radius: var(--radius-sm);
+            padding: 15px 20px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .finisher .fi-icon { font-size: 2em; }
+        .finisher h4 { color: var(--green); margin: 0; }
+        .finisher p { color: var(--text2); margin: 0; font-size: 0.9em; }
+
+        /* Rest Day */
+        .rest-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .rest-card .big-emoji { font-size: 4em; display: block; margin-bottom: 10px; }
+        .rest-card p { color: var(--text2); font-size: 1.1em; }
+
+        .file-input-hidden { display: none; }
+
+        @media print {
+            body { background: #fff; color: #000; }
+            .btn, .file-input-hidden, .modal-overlay { display: none !important; }
+            .exercise-card, .day-header { border: 1px solid #ccc; background: #fff; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h1>PRO FITNESS</h1>
+        <p class="subtitle">PUSH / PULL / LEGS / UPPER / LOWER</p>
+    </div>
+    <div class="warning-banner">
+        ⚠️ الأسبوع الأول والثاني: أوزان 60-65% من مستواك القديم | RIR 3-4 | لو ألم في مفصل = قلل الوزن فوراً
+    </div>
+
+    <!-- ==================== DAY 1: PUSH ==================== -->
+    <div class="day-header">
+        <div class="day-icon icon-push">💪</div>
+        <div class="day-info">
+            <h2>السبت – PUSH</h2>
+            <span>صدر · كتف أمامي · جانبي · ترايسبس</span>
+        </div>
+    </div>
+
+    <!-- Incline Barbell Press -->
+    <div class="exercise-card" data-ex="push_1">
+        <div class="exercise-top">
+            <span class="exercise-name">🏋️ Incline Barbell Press (زاوية 30°)</span>
+            <span class="exercise-meta">4 مجموعات × 8-10 · راحة 90ث</span>
+            <div>
+                <input type="file" class="file-input-hidden" accept="video/*" onchange="saveVideo(this, 'push_1')">
+                <button class="btn btn-upload" onclick="this.parentElement.querySelector('.file-input-hidden').click()">📁 فيديو</button>
+                <button class="btn btn-delete" onclick="removeVideo('push_1')">🗑️</button>
+            </div>
+        </div>
+        <div class="video-preview" id="vid_push_1"><video controls src=""></video></div>
+        <table class="sets-log" id="log_push_1">
+            <thead><tr><th>#</th><th>الوزن (كجم)</th><th>العدات</th><th>الأسبوع</th><th></th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <button class="btn btn-add-set" onclick="openModal('push_1')">+ إضافة مجموعة</button>
+    </div>
+
+    <!-- Flat Dumbbell Press -->
+    <div class="exercise-card" data-ex="push_2">
+        <div class="exercise-top">
+            <span class="exercise-name">🏋️ Flat Dumbbell Press</span>
+            <span class="exercise-meta">3 مجموعات × 10-12 · راحة 60ث</span>
+            <div>
+                <input type="file" class="file-input-hidden" accept="video/*" onchange="saveVideo(this, 'push_2')">
+                <button class="btn btn-upload" onclick="this.parentElement.querySelector('.file-input-hidden').click()">📁 فيديو</button>
+                <button class="btn btn-delete" onclick="removeVideo('push_2')">🗑️</button>
+            </div>
+        </div>
+        <div class="video-preview" id="vid_push_2"><video controls src=""></video></div>
+        <table class="sets-log" id="log_push_2">
+            <thead><tr><th>#</th><th>الوزن (كجم)</th><th>العدات</th><th>الأسبوع</th><th></th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <button class="btn btn-add-set" onclick="openModal('push_2')">+ إضافة مجموعة</button>
+    </div>
+
+    <!-- Dumbbell Shoulder Press -->
+    <div class="exercise-card" data-ex="push_3">
+        <div class="exercise-top">
+            <span class="exercise-name">🏋️ Dumbbell Shoulder Press</span>
+            <span class="exercise-meta">3 مجموعات × 10 · راحة 60ث</span>
+            <div>
+                <input type="file" class="file-input-hidden" accept="video/*" onchange="saveVideo(this, 'push_3')">
+                <button class="btn btn-upload" onclick="this.parentElement.querySelector('.file-input-hidden').click()">📁 فيديو</button>
+                <button class="btn btn-delete" onclick="removeVideo('push_3')">🗑️</button>
+            </div>
+        </div>
+        <div class="video-preview" id="vid_push_3"><video controls src=""></video></div>
+        <table class="sets-log" id="log_push_3">
+            <thead><tr><th>#</th><th>الوزن (كجم)</th><th>العدات</th><th>الأسبوع</th><th></th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <button class="btn btn-add-set" onclick="openModal('push_3')">+ إضافة مجموعة</button>
+    </div>
+
+    <!-- Superset: Lateral Raises -->
+    <div class="intensity-box superset">
+        <h3>⚡ سوبر سيت (تمرينين متتاليين بدون راحة)</h3>
+        <div class="exercise-card" data-ex="push_ss1">
+            <div class="exercise-top">
+                <span class="exercise-name">Cable Lateral Raises</span>
+                <span class="exercise-meta">4 مجموعات × 15-20</span>
+                <div>
+                    <input type="file" class="file-input-hidden" accept="video/*" onchange="saveVideo(this, 'push_ss1')">
+                    <button class="btn btn-upload" onclick="this.parentElement.querySelector('.file-input-hidden').click()">📁 فيديو</button>
+                    <button class="btn btn-delete" onclick="removeVideo('push_ss1')">🗑️</button>
+                </div>
+            </div>
+            <div class="video-preview" id="vid_push_ss1"><video controls src=""></video></div>
+            <table class="sets-log" id="log_push_ss1">
+                <thead><tr><th>#</th><th>الوزن (كجم)</th><th>العدات</th><th>الأسبوع</th><th></th></tr></thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-add-set" onclick="openModal('push_ss1')">+ إضافة مجموعة</button>
+        </div>
+        <div class="exercise-card" data-ex="push_ss2">
+            <div class="exercise-top">
+                <span class="exercise-name">Dumbbell Lateral Raises</span>
+                <span class="exercise-meta">3 مجموعات × 15-20 · راحة 45ث</span>
+                <div>
+                    <input type="file" class="file-input-hidden" accept="video/*" onchange="saveVideo(this, 'push_ss2')">
+                    <button class="btn btn-upload" onclick="this.parentElement.querySelector('.file-input-hidden').click()">📁 فيديو</button>
+                    <button class="btn btn-delete" onclick="removeVideo('push_ss2')">🗑️</button>
+                </div>
+            </div>
+            <div class="video-preview" id="vid_push_ss2"><video controls src=""></video></div>
+            <table class="sets-log" id="log_push_ss2">
+                <thead><tr><th>#</th><th>الوزن (كجم)</th><th>العدات</th><th>الأسبوع</th><th></th></tr></thead>
+                <tbody></tbody>
+            </table>
+            <button class="btn btn-add-set" onclick="openModal('push_ss2')">+ إضافة مجموعة</button>
+        </div>
+    </div>
+
+    <!-- Triceps Pushdown -->
+    <div class="exercise-card" data-ex="push_4">
+        <div class="exercise-top">
+            <span class="exercise-name">🏋️ Triceps Pushdown (Straight Bar)</span>
+            <span class="exercise-meta">3 مجموعات × 12-15 · راحة 45ث</span>
+            <div>
+                <input type="file" class="file-input-hidden" accept="video/*" onchange="saveVideo(this, 'push_4')">
+                <button class="btn btn-upload" onclick="this.parentElement.querySelector('.file-input-hidden').click()">📁 فيديو</button>
+                <button class="btn btn-delete" onclick="removeVideo('push_4')">🗑️</button>
+            </div>
+        </div>
+        <div class="video-preview" id="vid_push_4"><video controls src=""></video></div>
+        <table class="sets-log" id="log_push_4">
+            <thead><tr><th>#</th><th>الوزن (كجم)</th><th>العدات</th><th>الأسبوع</th><th></th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <button class="btn btn-add-set" onclick="openModal('push_4')">+ إضافة مجموعة</button>
+    </div>
+
+    <!-- Overhead Triceps Extension -->
+    <div class="exercise-card" data-ex="push_5">
+        <div class="exercise-top">
+            <span class="exercise-name">🏋️ Overhead Triceps Extension (كابل)</span>
+            <span class="exercise-meta">3 مجموعات × 12 · راحة 45ث</span>
+            <div>
+                <input type="file" class="file-input-hidden" accept="video/*" onchange="saveVideo(this, 'push_5')">
+                <button class="btn btn-upload" onclick="this.parentElement.querySelector('.file-input-hidden').click()">📁 فيديو</button>
+                <button class="btn btn-delete" onclick="removeVideo('push_5')">🗑️</button>
+            </div>
+        </div>
+        <div class="video-preview" id="vid_push_5"><video controls src=""></video></div>
+        <table class="sets-log" id="log_push_5">
+            <thead><tr><th>#</th><th>الوزن (كجم)</th><th>العدات</th><th>الأسبوع</th><th></th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <button class="btn btn-add-set" onclick="openModal('push_5')">+ إضافة مجموعة</button>
+    </div>
+
